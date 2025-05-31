@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>Amazon Scraper</title></head>
+<body>
+  <h1>Scraped Products</h1>
+  <div id="products"></div>
+  <script>
+    fetch('http://localhost:3000/products')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('products');
+        data.forEach(p => {
+          const card = document.createElement('div');
+          card.innerHTML = `
+            <img src="${p.image}" width="100"/><br/>
+            <a href="${p.url}" target="_blank">${p.name}</a><br/>
+            Price: €${p.offers[0]?.price} <br/>
+            Availability: ${p.offers[0]?.availability} <br/>
+            <hr/>
+          `;
+          container.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
